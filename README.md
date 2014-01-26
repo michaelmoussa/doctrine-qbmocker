@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/michaelmoussa/doctrine-qbmocker.png?branch=master)](https://travis-ci.org/michaelmoussa/doctrine-qbmocker)
+
 # Doctrine QueryBuilderMocker
 
 ### What's this?
