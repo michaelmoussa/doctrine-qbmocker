@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/michaelmoussa/doctrine-qbmocker.png?branch=master)](https://travis-ci.org/michaelmoussa/doctrine-qbmocker)
 [![Coverage Status](https://coveralls.io/repos/michaelmoussa/doctrine-qbmocker/badge.png)](https://coveralls.io/r/michaelmoussa/doctrine-qbmocker)
+[![Latest Stable Version](https://poser.pugx.org/michaelmoussa/doctrine-qbmocker/v/stable.png)](https://packagist.org/packages/michaelmoussa/doctrine-qbmocker)
 # Doctrine QueryBuilderMocker
 
 ### What's this?
