@@ -15,3 +15,6 @@ script:
     - phpunit --configuration phpunit.xml.ci
     - cd $TRAVIS_BUILD_DIR
     - ./vendor/squizlabs/php_codesniffer/scripts/phpcs --standard=PSR2 -s -p ./src ./test
+
+after_script:
+    - php vendor/bin/coveralls

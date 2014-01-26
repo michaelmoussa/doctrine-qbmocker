@@ -1,0 +1,2 @@
+src_dir: src
+coverage_clover: test/clover.xml
