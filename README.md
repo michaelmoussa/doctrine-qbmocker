@@ -5,7 +5,7 @@
 
 ### What's this?
 
-A tool for easy mocking of Doctrine ODM MongoDB QueryBuilder objects to facilitate unit testing.
+A tool for easy mocking of Doctrine QueryBuilder objects to facilitate unit testing.
 
 ### Example
 
@@ -112,10 +112,19 @@ public function testCanGetSortedUsersByCountry()
 
 Short and concise! Notice that it looks almost identical to the calls being made in the actual service class: The only difference is that `execute()` accepts a parameter, which ends up becoming the value that the mocked call to `execute()` will return. Mocking a method's usage of the Query Builder (or vice-versa, for those of us who TDD) is as simple as copying-and-pasting.
 
+Prefer MySQL? This library supports mocking Doctrine ORM query builders as well. Just use `MMoussa\Doctrine\Test\ORM\QueryBuilderMocker` instead of `MMoussa\Doctrine\Test\ODM\MongoDB\QueryBuilderMocker`!
+
 ### Installation
 
 The only supported method of installation is Composer: `composer require "michaelmoussa/doctrine-qbmocker:0.*" --dev`
 
+### Dependencies
+
+* Using this library for mocking the ORM query builder requires you to install `"doctrine/orm": "0.2.*"` as well.
+* Using this library for mocking the ODM query builder requires you to install `"doctrine/mongodb-odm": "dev-master"` and `"jmikola/geojson": "~1.0"` as well.
+
 ### Contributing
 
-Contributions are welcome. I don't have the MongoDB ODM Query Builder fully mockable here - only the portions I needed for the project that prompted me to write this. Unsupported methods include `expr`, `debug`, `getQueryArray`, and so on. Please feel free to implement those and send a PR. Nothing is done for the ORM Query Builder yet either.
+Contributions are welcome. There are several unsupported methods still that would be non-trivial to implement. Please feel free to take care of those and send a PR.
+
+All contributions must conform to PSR2 and include 100% test coverage.
