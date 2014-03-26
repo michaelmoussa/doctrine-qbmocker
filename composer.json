@@ -1,6 +1,6 @@
 {
     "name": "michaelmoussa/doctrine-qbmocker",
-    "description": "A helper library for mocking Doctrine Mongo ODM query builders",
+    "description": "A helper library for mocking Doctrine query builders",
     "homepage": "http://github.com/michaelmoussa/doctrine-qbmocker",
     "license": "MIT",
     "authors": [
@@ -10,14 +10,19 @@
         }
     ],
     "require": {
-        "doctrine/mongodb-odm": "dev-master",
-        "doctrine/orm": "2.*",
-        "jmikola/geojson": "~1.0",
         "phpunit/phpunit": "3.7.*"
     },
     "require-dev": {
+        "doctrine/mongodb-odm": "dev-master",
+        "doctrine/orm": "2.*",
+        "jmikola/geojson": "~1.0",
         "satooshi/php-coveralls": "dev-master",
         "squizlabs/php_codesniffer": "1.*"
+    },
+    "suggest": {
+        "doctrine/mongodb-odm": "Allows for simplified mocking of Doctrine ODM MongoDB query builders.",
+        "jmikola/geojson": "Required for doctrine/mongodb-odm.",
+        "doctrine/orm": "Allows for simplified mocking of Doctrine ORM query builders."
     },
     "autoload": {
         "psr-0": {
