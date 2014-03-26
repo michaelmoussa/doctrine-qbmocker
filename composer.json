@@ -11,6 +11,7 @@
     ],
     "require": {
         "doctrine/mongodb-odm": "dev-master",
+        "doctrine/orm": "2.*",
         "jmikola/geojson": "~1.0",
         "phpunit/phpunit": "3.7.*"
     },
