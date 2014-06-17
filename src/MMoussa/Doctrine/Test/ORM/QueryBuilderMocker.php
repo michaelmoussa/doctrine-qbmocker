@@ -26,7 +26,7 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
         'setParameter',
         'setParameters',
         'setFirstResult',
-        'setMaxResult',
+        'setMaxResults',
         'add',
         'select',
         'distinct',
