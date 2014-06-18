@@ -67,15 +67,7 @@ abstract class QueryBuilderMocker
         }
 
         if ($method === 'execute') {
-            $invocationMocker = $this->query->expects($this->testCase->once())
-                ->method('execute');
-
-            // QueryBuilderMocker "execute" parameter is the intended final result to return.
-            if (count($args) > 0) {
-                $invocationMocker->will($this->testCase->returnValue($args[0]));
-            }
-
-            return $this;
+            return $this->execute($args);
         }
 
         $invocationMocker = $this->queryBuilder->expects($this->testCase->at($this->at))
@@ -104,5 +96,22 @@ abstract class QueryBuilderMocker
     public function getQueryBuilderMock()
     {
         return $this->queryBuilder;
+    }
+
+    /**
+     * @param array $args
+     * @return $this
+     */
+    protected function execute(array $args)
+    {
+        $invocationMocker = $this->query->expects($this->testCase->once())
+            ->method('execute');
+
+        // QueryBuilderMocker "execute" parameter is the intended final result to return.
+        if (count($args) > 0) {
+            $invocationMocker->will($this->testCase->returnValue($args[0]));
+        }
+
+        return $this;
     }
 }

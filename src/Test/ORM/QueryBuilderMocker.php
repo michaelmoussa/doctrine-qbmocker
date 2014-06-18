@@ -68,4 +68,32 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
             ->disableOriginalConstructor()
             ->getMock();
     }
+
+    /**
+     * @param array $args
+     * @throws \InvalidArgumentException
+     * @return $this
+     */
+    protected function execute(array $args)
+    {
+        $invocationMocker = $this->query
+            ->expects($this->testCase->once())
+            ->method('execute');
+
+        if (empty($args)) {
+            return $this;
+        }
+
+        if (count($args) > 1) {
+            $executeArgs = is_array($args[0]) ? $args[0] : array($args[0]);
+            $result = isset($args[1]) ? $args[1] : null;
+            call_user_func_array(array($invocationMocker, 'with'), $executeArgs);
+
+            $invocationMocker->will($this->testCase->returnValue($result));
+        } elseif (count($args) == 1) {
+            $invocationMocker->will($this->testCase->returnValue($args[0]));
+        }
+
+        return $this;
+    }
 }
