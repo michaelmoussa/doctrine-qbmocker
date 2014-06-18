@@ -78,7 +78,7 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
     {
         $qbm = new QueryBuilderMocker($this);
         $qbm->getQuery()
-            ->execute([], 'someReturnValue');
+            ->execute('someReturnValue');
 
         $qb = $qbm->getQueryBuilderMock();
 
@@ -105,7 +105,7 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
             ->where('property = ?')
             ->andWhere('otherProperty =:otherValue')
             ->getQuery()
-            ->execute([], 'it works!');
+            ->execute('it works!');
 
         $qb = $qbm->getQueryBuilderMock();
         $result = $qb->select('fieldName')
