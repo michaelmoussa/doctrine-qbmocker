@@ -64,6 +64,17 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
         $this->assertSame('result', $qb->getQuery()->execute('result'));
     }
 
+    public function testCanPassBothParamsAndReturnValueToExecute()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()
+            ->execute(['prop1' => 'value1', 'prop2' => 'value2'], 'result');
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $this->assertSame('result', $qb->getQuery()->execute(['prop1' => 'value1', 'prop2' => 'value2']));
+    }
+
     public function testMockedGetQueryReturnsStubQueryObject()
     {
         $qbm = new QueryBuilderMocker($this);

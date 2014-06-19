@@ -99,19 +99,10 @@ abstract class QueryBuilderMocker
     }
 
     /**
-     * @param array $args
-     * @return $this
+     * Handles mocking of execute() calls, which are a special case.
+     *
+     * @param array|null $args
+     * @return \Doctrine\ODM\MongoDB\Query\Builder|\Doctrine\ORM\QueryBuilder
      */
-    protected function execute(array $args)
-    {
-        $invocationMocker = $this->query->expects($this->testCase->once())
-            ->method('execute');
-
-        // QueryBuilderMocker "execute" parameter is the intended final result to return.
-        if (count($args) > 0) {
-            $invocationMocker->will($this->testCase->returnValue($args[0]));
-        }
-
-        return $this;
-    }
+    abstract protected function execute(array $args);
 }
