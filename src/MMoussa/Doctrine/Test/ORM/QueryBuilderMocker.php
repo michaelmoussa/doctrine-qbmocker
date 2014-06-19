@@ -50,6 +50,7 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
         'addOrderBy',
         'addCriteria',
         'execute',
+        'useResultCache',
     );
 
     /**
@@ -64,8 +65,38 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
             ->disableOriginalConstructor()
             ->getMock();
         $this->query = $testCase->getMockBuilder('StubQuery') // can't mock Doctrine's "Query" because it's "final"
-            ->setMethods(array('execute'))
+            ->setMethods(array('execute', 'useResultCache'))
             ->disableOriginalConstructor()
             ->getMock();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param array|null $args
+     * @throws \InvalidArgumentException
+     * @return $this
+     */
+    protected function execute(array $args)
+    {
+        $invocationMocker = $this->query
+            ->expects($this->testCase->once())
+            ->method('execute');
+
+        if (empty($args)) {
+            return $this;
+        }
+
+        if (count($args) > 1) {
+            $executeArgs = !is_array($args[0]) && $args[0] !== null ? array($args[0]) : $args[0];
+            $result = isset($args[1]) ? $args[1] : null;
+
+            $invocationMocker->with($executeArgs);
+        } else {
+            $result = $args[0];
+        }
+
+        $invocationMocker->will($this->testCase->returnValue($result));
+        return $this;
     }
 }

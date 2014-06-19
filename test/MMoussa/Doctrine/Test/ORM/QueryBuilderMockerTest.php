@@ -31,6 +31,50 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
             ->andWhere('otherProperty = :otherValue');
     }
 
+    public function testEmptyExecuteIsReturned()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()
+            ->execute();
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $this->assertNull($qb->getQuery()->execute());
+    }
+
+    public function testStringParamForExecuteIsConvertedToArray()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()
+            ->execute(null, 'result');
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $this->assertSame('result', $qb->getQuery()->execute(null, 'result'));
+    }
+
+    public function testSingleParamToExecuteActsAsResult()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()
+            ->execute('result');
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $this->assertSame('result', $qb->getQuery()->execute('result'));
+    }
+
+    public function testCanPassBothParamsAndReturnValueToExecute()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()
+            ->execute(['prop1' => 'value1', 'prop2' => 'value2'], 'result');
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $this->assertSame('result', $qb->getQuery()->execute(['prop1' => 'value1', 'prop2' => 'value2']));
+    }
+
     public function testMockedGetQueryReturnsStubQueryObject()
     {
         $qbm = new QueryBuilderMocker($this);

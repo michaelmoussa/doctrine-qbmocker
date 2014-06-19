@@ -131,4 +131,24 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
             ->setMethods(array('execute'))
             ->getMock();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param array|null $args
+     * @throws \InvalidArgumentException
+     * @return $this
+     */
+    protected function execute(array $args)
+    {
+        $invocationMocker = $this->query->expects($this->testCase->once())
+            ->method('execute');
+
+        // QueryBuilderMocker "execute" parameter is the intended final result to return.
+        if (count($args) > 0) {
+            $invocationMocker->will($this->testCase->returnValue($args[0]));
+        }
+
+        return $this;
+    }
 }
