@@ -88,10 +88,10 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
         }
 
         if (count($args) > 1) {
-            $executeArgs = !is_array($args[0]) && $args[0] !== null ? array($args[0]) : $args[0];
+            $executeArgs = is_array($args[0]) ? $args[0] : array($args[0]);
             $result = isset($args[1]) ? $args[1] : null;
 
-            $invocationMocker->with($executeArgs);
+            call_user_func_array(array($invocationMocker, 'with'), $executeArgs);
         } else {
             $result = $args[0];
         }

@@ -68,7 +68,7 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
     {
         $qbm = new QueryBuilderMocker($this);
         $qbm->getQuery()
-            ->execute(array('prop1' => 'value1', 'prop2' => 'value2'), 'result');
+            ->execute(array(array('prop1' => 'value1', 'prop2' => 'value2')), 'result');
 
         $qb = $qbm->getQueryBuilderMock();
 
