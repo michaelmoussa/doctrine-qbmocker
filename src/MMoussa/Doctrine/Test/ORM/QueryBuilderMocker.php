@@ -50,6 +50,7 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
         'addOrderBy',
         'addCriteria',
         'execute',
+        'useResultCache',
     );
 
     /**
@@ -64,7 +65,7 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
             ->disableOriginalConstructor()
             ->getMock();
         $this->query = $testCase->getMockBuilder('StubQuery') // can't mock Doctrine's "Query" because it's "final"
-            ->setMethods(array('execute'))
+            ->setMethods(array('execute', 'useResultCache'))
             ->disableOriginalConstructor()
             ->getMock();
     }
