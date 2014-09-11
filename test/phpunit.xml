@@ -10,6 +10,10 @@
         </whitelist>
     </filter>
 
+    <logging>
+        <log highLowerBound="100" lowUpperBound="99" type="coverage-html" target="code-coverage" />
+    </logging>
+
     <testsuites>
         <testsuite name="mmoussa/doctrine-qbmocker">
             <directory>.</directory>

@@ -70,6 +70,10 @@ abstract class QueryBuilderMocker
             return $this->execute($args);
         }
 
+        if ($method === 'getSingleResult') {
+            return $this->getSingleResult($args);
+        }
+
         $invocationMocker = $this->queryBuilder->expects($this->testCase->at($this->at))
             ->method($method);
         $this->at++; // increment to maintain expected execution order
@@ -105,4 +109,12 @@ abstract class QueryBuilderMocker
      * @return \Doctrine\ODM\MongoDB\Query\Builder|\Doctrine\ORM\QueryBuilder
      */
     abstract protected function execute(array $args);
+
+    /**
+     * Handles mocking of getSingleResult calls, which are another special case
+     *
+     * @param array|null $args
+     * @return \Doctrine\ODM\MongoDB\Query\Builder|\Doctrine\ORM\QueryBuilder
+     */
+    abstract protected function getSingleResult(array $args);
 }

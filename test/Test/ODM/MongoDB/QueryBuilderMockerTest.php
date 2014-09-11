@@ -65,6 +65,27 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
         $this->assertNull($result);
     }
 
+    public function testValuePassedToMockedGetSingleResultMethodIsReturned()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()->getSingleResult('someReturnValue');
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $this->assertSame('someReturnValue', $qb->getQuery()->getSingleResult());
+    }
+
+    public function testMockingGetSingleResultWithNoParamWillCauseItToReturnNull()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()->getSingleResult();
+
+        $qb = $qbm->getQueryBuilderMock();
+        $result = $qb->getQuery()->getSingleResult();
+
+        $this->assertNull($result);
+    }
+
     public function testCanMockChainedMethodCallsToQuery()
     {
         $qbm = new QueryBuilderMocker($this);
