@@ -113,6 +113,7 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
         'withinCenterSphere',
         'withinPolygon',
         'execute',
+        'getSingleResult',
     );
 
     /**
@@ -128,7 +129,7 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
             ->getMock();
         $this->query = $testCase->getMockBuilder('Doctrine\ODM\MongoDB\Query\Query')
             ->disableOriginalConstructor()
-            ->setMethods(array('execute'))
+            ->setMethods(array('execute', 'getSingleResult'))
             ->getMock();
     }
 
@@ -145,6 +146,24 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
             ->method('execute');
 
         // QueryBuilderMocker "execute" parameter is the intended final result to return.
+        if (count($args) > 0) {
+            $invocationMocker->will($this->testCase->returnValue($args[0]));
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param array|null $args
+     * @return $this
+     */
+    protected function getSingleResult(array $args)
+    {
+        $invocationMocker = $this->query->expects($this->testCase->once())->method('getSingleResult');
+
+        // QueryBuilderMocker "getSingleResult" parameter is the intended final result to return.
         if (count($args) > 0) {
             $invocationMocker->will($this->testCase->returnValue($args[0]));
         }

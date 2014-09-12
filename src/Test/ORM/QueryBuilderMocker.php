@@ -51,6 +51,7 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
         'addCriteria',
         'execute',
         'useResultCache',
+        'getSingleResult',
     );
 
     /**
@@ -65,7 +66,7 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
             ->disableOriginalConstructor()
             ->getMock();
         $this->query = $testCase->getMockBuilder('StubQuery') // can't mock Doctrine's "Query" because it's "final"
-            ->setMethods(array('execute', 'useResultCache'))
+            ->setMethods(array('execute', 'useResultCache', 'getSingleResult'))
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -97,6 +98,24 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
         }
 
         $invocationMocker->will($this->testCase->returnValue($result));
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param array|null $args
+     * @return $this
+     */
+    protected function getSingleResult(array $args)
+    {
+        $invocationMocker = $this->query->expects($this->testCase->once())->method('getSingleResult');
+
+        // QueryBuilderMocker "getSingleResult" parameter is the intended final result to return.
+        if (count($args) > 0) {
+            $invocationMocker->will($this->testCase->returnValue($args[0]));
+        }
+
         return $this;
     }
 }
