@@ -98,7 +98,7 @@ Imagine a unit test class filled with dozens of those! Surely we can do better. 
 ```
 public function testCanGetSortedUsersByCountry()
 {
-    $qbm = new QueryBuilderMock($this);
+    $qbm = new QueryBuilderMocker($this);
     $qbm->select('firstName', 'lastName', 'email')
         ->field('country')->equals($country)
         ->sort('lastName', 'firstName')
