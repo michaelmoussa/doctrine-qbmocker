@@ -86,6 +86,17 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('it works!', $qb->getQuery()->getSingleResult());
     }
 
+    public function testGetSingleScalarResultReturnsValue()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()
+            ->getSingleScalarResult('it works!');
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $this->assertEquals('it works!', $qb->getQuery()->getSingleScalarResult());
+    }
+
     public function testEmptyGetSingleResultIsNull()
     {
         $qbm = new QueryBuilderMocker($this);
