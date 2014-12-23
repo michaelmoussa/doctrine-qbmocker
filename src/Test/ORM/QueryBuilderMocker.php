@@ -13,7 +13,7 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Mocks Doctrine ORM QueryBuilder fluent interface invocations for use in PHPUnit tests.
- * @method \Doctrine\ORM\Query|\Doctrine\ODM\MongoDB\Query\Query getQuery
+ * @method \Doctrine\ORM\Query getQuery
  * @method $this setParameter
  * @method $this setParameters
  * @method $this setFirstResult
