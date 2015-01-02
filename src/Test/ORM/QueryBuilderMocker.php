@@ -13,6 +13,34 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Mocks Doctrine ORM QueryBuilder fluent interface invocations for use in PHPUnit tests.
+ * @method \Doctrine\ORM\Query getQuery
+ * @method $this setParameter
+ * @method $this setParameters
+ * @method $this setFirstResult
+ * @method $this setMaxResults
+ * @method $this add
+ * @method $this select
+ * @method $this distinct
+ * @method $this addSelect
+ * @method $this delete
+ * @method $this update
+ * @method $this from
+ * @method $this join
+ * @method $this innerJoin
+ * @method $this leftJoin
+ * @method $this set
+ * @method $this where
+ * @method $this andWhere
+ * @method $this orWhere
+ * @method $this groupBy
+ * @method $this addGroupBy
+ * @method $this having
+ * @method $this andHaving
+ * @method $this orHaving
+ * @method $this orderBy
+ * @method $this addOrderBy
+ * @method $this addCriteria
+ * @method $this useResultCache
  */
 class QueryBuilderMocker extends BaseQueryBuilderMocker
 {
