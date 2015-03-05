@@ -112,11 +112,11 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
     {
         $qbm = new QueryBuilderMocker($this);
         $qbm->getQuery()
-            ->getArrayResult([1, 2, 3]);
+            ->getArrayResult(array(1, 2, 3));
 
         $qb = $qbm->getQueryBuilderMock();
 
-        $this->assertEquals([1, 2, 3], $qb->getQuery()->getArrayResult());
+        $this->assertEquals(array(1, 2, 3), $qb->getQuery()->getArrayResult());
     }
 
     public function testEmptyGetArrayResultIsNull()
