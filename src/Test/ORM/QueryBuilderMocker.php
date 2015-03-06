@@ -81,6 +81,7 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
         'useResultCache',
         'getSingleResult',
         'getSingleScalarResult',
+        'getArrayResult'
     );
 
     /**
@@ -95,7 +96,9 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
             ->disableOriginalConstructor()
             ->getMock();
         $this->query = $testCase->getMockBuilder('StubQuery') // can't mock Doctrine's "Query" because it's "final"
-            ->setMethods(array('execute', 'useResultCache', 'getSingleResult', 'getSingleScalarResult'))
+            ->setMethods(
+                array('execute', 'useResultCache', 'getSingleResult', 'getSingleScalarResult', 'getArrayResult')
+            )
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -164,6 +167,22 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
     }
 
     /**
+     * @param array|null $args
+     * @return $this
+     */
+    protected function getArrayResult(array $args)
+    {
+        $invocationMocker = $this->query->expects($this->testCase->once())->method('getArrayResult');
+
+        // QueryBuilderMocker "getArrayResult" parameter is the intended final result to return.
+        if (count($args) > 0) {
+            $invocationMocker->will($this->testCase->returnValue($args[0]));
+        }
+
+        return $this;
+    }
+
+    /**
      * Override for methods that are specific to ORM
      *
      * @param string $method
@@ -174,6 +193,10 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
     {
         if ($method === 'getSingleScalarResult') {
             return $this->getSingleScalarResult($args);
+        }
+
+        if ($method === 'getArrayResult') {
+            return $this->getArrayResult($args);
         }
 
         return parent::__call($method, $args);

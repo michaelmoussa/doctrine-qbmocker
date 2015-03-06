@@ -108,6 +108,28 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
         $this->assertNull($qb->getQuery()->getSingleResult());
     }
 
+    public function testGetArrayResultReturnsValue()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()
+            ->getArrayResult(array(1, 2, 3));
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $this->assertEquals(array(1, 2, 3), $qb->getQuery()->getArrayResult());
+    }
+
+    public function testEmptyGetArrayResultIsNull()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()
+            ->getArrayResult();
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $this->assertNull($qb->getQuery()->getArrayResult());
+    }
+
     public function testMockedGetQueryReturnsStubQueryObject()
     {
         $qbm = new QueryBuilderMocker($this);
