@@ -81,7 +81,8 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
         'useResultCache',
         'getSingleResult',
         'getSingleScalarResult',
-        'getArrayResult'
+        'getArrayResult',
+        'getOneOrNullResult'
     );
 
     /**
@@ -97,7 +98,14 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
             ->getMock();
         $this->query = $testCase->getMockBuilder('StubQuery') // can't mock Doctrine's "Query" because it's "final"
             ->setMethods(
-                array('execute', 'useResultCache', 'getSingleResult', 'getSingleScalarResult', 'getArrayResult')
+                array(
+                    'execute',
+                    'useResultCache',
+                    'getSingleResult',
+                    'getSingleScalarResult',
+                    'getArrayResult',
+                    'getOneOrNullResult'
+                )
             )
             ->disableOriginalConstructor()
             ->getMock();
@@ -175,6 +183,22 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
         $invocationMocker = $this->query->expects($this->testCase->once())->method('getArrayResult');
 
         // QueryBuilderMocker "getArrayResult" parameter is the intended final result to return.
+        if (count($args) > 0) {
+            $invocationMocker->will($this->testCase->returnValue($args[0]));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array|null $args
+     * @return $this
+     */
+    protected function getOneOrNullResult(array $args)
+    {
+        $invocationMocker = $this->query->expects($this->testCase->once())->method('getOneOrNullResult');
+
+        // QueryBuilderMocker "getOneOrNullResult" parameter is the intended final result to return.
         if (count($args) > 0) {
             $invocationMocker->will($this->testCase->returnValue($args[0]));
         }
