@@ -82,7 +82,8 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
         'getSingleResult',
         'getSingleScalarResult',
         'getArrayResult',
-        'getOneOrNullResult'
+        'getOneOrNullResult',
+        'getResult'
     );
 
     /**
@@ -104,7 +105,8 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
                     'getSingleResult',
                     'getSingleScalarResult',
                     'getArrayResult',
-                    'getOneOrNullResult'
+                    'getOneOrNullResult',
+                    'getResult'
                 )
             )
             ->disableOriginalConstructor()
@@ -207,6 +209,22 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
     }
 
     /**
+     * @param array|null $args
+     * @return $this
+     */
+    protected function getResult(array $args)
+    {
+        $invocationMocker = $this->query->expects($this->testCase->once())->method('getResult');
+
+        // QueryBuilderMocker "getResult" parameter is the intended final result to return.
+        if (count($args) > 0) {
+            $invocationMocker->will($this->testCase->returnValue($args[0]));
+        }
+
+        return $this;
+    }
+
+    /**
      * Override for methods that are specific to ORM
      *
      * @param string $method
@@ -221,6 +239,10 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
 
         if ($method === 'getArrayResult') {
             return $this->getArrayResult($args);
+        }
+
+        if ($method === 'getResult') {
+            return $this->getResult($args);
         }
 
         return parent::__call($method, $args);
