@@ -82,7 +82,8 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
         'getSingleResult',
         'getSingleScalarResult',
         'getArrayResult',
-        'getOneOrNullResult'
+        'getOneOrNullResult',
+        'getResult'
     );
 
     /**
@@ -104,7 +105,8 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
                     'getSingleResult',
                     'getSingleScalarResult',
                     'getArrayResult',
-                    'getOneOrNullResult'
+                    'getOneOrNullResult',
+                    'getResult'
                 )
             )
             ->disableOriginalConstructor()
@@ -197,6 +199,22 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
     protected function getOneOrNullResult(array $args)
     {
         $invocationMocker = $this->query->expects($this->testCase->once())->method('getOneOrNullResult');
+
+        // QueryBuilderMocker "getOneOrNullResult" parameter is the intended final result to return.
+        if (count($args) > 0) {
+            $invocationMocker->will($this->testCase->returnValue($args[0]));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array|null $args
+     * @return $this
+     */
+    protected function getResult(array $args)
+    {
+        $invocationMocker = $this->query->expects($this->testCase->once())->method('getResult');
 
         // QueryBuilderMocker "getOneOrNullResult" parameter is the intended final result to return.
         if (count($args) > 0) {
