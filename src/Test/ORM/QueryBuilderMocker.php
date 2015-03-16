@@ -241,6 +241,10 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
             return $this->getArrayResult($args);
         }
 
+        if ($method === 'getResult') {
+            return $this->getResult($args);
+        }
+
         return parent::__call($method, $args);
     }
 }
