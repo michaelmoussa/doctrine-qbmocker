@@ -216,7 +216,7 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
     {
         $invocationMocker = $this->query->expects($this->testCase->once())->method('getResult');
 
-        // QueryBuilderMocker "getOneOrNullResult" parameter is the intended final result to return.
+        // QueryBuilderMocker "getResult" parameter is the intended final result to return.
         if (count($args) > 0) {
             $invocationMocker->will($this->testCase->returnValue($args[0]));
         }
