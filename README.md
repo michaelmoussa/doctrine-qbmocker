@@ -101,6 +101,7 @@ public function testCanGetSortedUsersByCountry()
     $qbm = new QueryBuilderMocker($this);
     $qbm->select('firstName', 'lastName', 'email')
         ->field('country')->equals($country)
+        ->andWhere($qbm->expr()->isNotNull('email'))
         ->sort('lastName', 'firstName')
         ->getQuery()
         ->execute('it works!');
