@@ -8,6 +8,7 @@
 
 namespace MMoussa\Doctrine\Test\ORM;
 
+use Doctrine\ORM\Query\Expr;
 use MMoussa\Doctrine\Test\QueryBuilderMocker as BaseQueryBuilderMocker;
 use PHPUnit_Framework_TestCase;
 
@@ -225,6 +226,22 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
     }
 
     /**
+     * @return Expr
+     */
+    protected function getExpr()
+    {
+        $expr = new Expr();
+
+        $this->queryBuilder
+            ->expects($this->testCase->at($this->at))
+            ->method('expr')
+            ->will($this->testCase->returnValue($expr));
+        $this->at++;
+
+        return $expr;
+    }
+
+    /**
      * Override for methods that are specific to ORM
      *
      * @param string $method
@@ -233,6 +250,10 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
      */
     public function __call($method, array $args)
     {
+        if ($method === 'expr') {
+            return $this->getExpr();
+        }
+
         if ($method === 'getSingleScalarResult') {
             return $this->getSingleScalarResult($args);
         }

@@ -221,13 +221,36 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
         $this->assertSame('it works!', $result);
     }
 
+    public function testExprReturnsDoctrineExpressionInstance()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $expr = $qbm->expr();
+
+        $qb = $qbm->getQueryBuilderMock();
+        $result = $qb->expr();
+        $this->assertInstanceOf('Doctrine\Orm\Query\Expr', $result);
+        $this->assertSame($expr, $result);
+    }
+
+    public function testExprWorksProperlyWhenUsedInsideWhere()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->andWhere($qbm->expr()->isNull('foo'));
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $expression = $qb->expr()->isNull('foo');
+        $this->assertEquals('foo IS NULL', $expression);
+        $qb->andWhere($expression);
+    }
+
     /**
      * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage Mocking "expr" is not supported.
+     * @expectedExceptionMessage Mocking "foo" is not supported.
      */
     public function testBadMethodCallExceptionIsThrownIfAttemptingToMockUnsupportedMethod()
     {
         $qbm = new QueryBuilderMocker($this);
-        $qbm->expr();
+        $qbm->foo();
     }
 }
