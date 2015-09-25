@@ -103,6 +103,16 @@ abstract class QueryBuilderMocker
     }
 
     /**
+     * Returns the final mocked query.
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    public function getQueryMock()
+    {
+        return $this->query;
+    }
+
+    /**
      * Handles mocking of execute() calls, which are a special case.
      *
      * @param array|null $args
