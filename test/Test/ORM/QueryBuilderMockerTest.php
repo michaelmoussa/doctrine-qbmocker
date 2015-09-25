@@ -108,6 +108,28 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
         $this->assertNull($qb->getQuery()->getSingleResult());
     }
 
+    public function testGetArrayResultReturnsValue()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()
+            ->getArrayResult(array(1, 2, 3));
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $this->assertEquals(array(1, 2, 3), $qb->getQuery()->getArrayResult());
+    }
+
+    public function testEmptyGetArrayResultIsNull()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()
+            ->getArrayResult();
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $this->assertNull($qb->getQuery()->getArrayResult());
+    }
+
     public function testMockedGetQueryReturnsStubQueryObject()
     {
         $qbm = new QueryBuilderMocker($this);
@@ -142,6 +164,44 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
         $this->assertNull($result);
     }
 
+    public function testValuePassedToMockingGetOneOrNullResultIsReturned()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()->getOneOrNullResult(123);
+
+        $qb = $qbm->getQueryBuilderMock();
+        $this->assertEquals(123, $qb->getQuery()->getOneOrNullResult());
+    }
+
+    public function testMockingGetOneOrNullResultWithNoParamCauseItToReturnNull()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()->getOneOrNullResult();
+
+        $qb = $qbm->getQueryBuilderMock();
+        $result = $qb->getQuery()->getOneOrNullResult();
+        $this->assertNull($result);
+    }
+
+    public function testValuePassedToMockingGetResultIsReturned()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()->getResult(123);
+
+        $qb = $qbm->getQueryBuilderMock();
+        $this->assertEquals(123, $qb->getQuery()->getResult());
+    }
+
+    public function testMockingGetResultWithNoParamCauseItToReturnNull()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()->getResult();
+
+        $qb = $qbm->getQueryBuilderMock();
+        $result = $qb->getQuery()->getResult();
+        $this->assertNull($result);
+    }
+
     public function testCanMockChainedMethodCallsToQuery()
     {
         $qbm = new QueryBuilderMocker($this);
@@ -161,14 +221,37 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
         $this->assertSame('it works!', $result);
     }
 
+    public function testExprReturnsDoctrineExpressionInstance()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $expr = $qbm->expr();
+
+        $qb = $qbm->getQueryBuilderMock();
+        $result = $qb->expr();
+        $this->assertInstanceOf('Doctrine\Orm\Query\Expr', $result);
+        $this->assertSame($expr, $result);
+    }
+
+    public function testExprWorksProperlyWhenUsedInsideWhere()
+    {
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->andWhere($qbm->expr()->isNull('foo'));
+
+        $qb = $qbm->getQueryBuilderMock();
+
+        $expression = $qb->expr()->isNull('foo');
+        $this->assertEquals('foo IS NULL', $expression);
+        $qb->andWhere($expression);
+    }
+
     /**
      * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage Mocking "expr" is not supported.
+     * @expectedExceptionMessage Mocking "foo" is not supported.
      */
     public function testBadMethodCallExceptionIsThrownIfAttemptingToMockUnsupportedMethod()
     {
         $qbm = new QueryBuilderMocker($this);
-        $qbm->expr();
+        $qbm->foo();
     }
 
     /**

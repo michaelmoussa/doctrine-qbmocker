@@ -74,6 +74,10 @@ abstract class QueryBuilderMocker
             return $this->getSingleResult($args);
         }
 
+        if ($method === 'getOneOrNullResult') {
+            return $this->getOneOrNullResult($args);
+        }
+
         $invocationMocker = $this->queryBuilder->expects($this->testCase->at($this->at))
             ->method($method);
         $this->at++; // increment to maintain expected execution order
@@ -127,4 +131,12 @@ abstract class QueryBuilderMocker
      * @return \Doctrine\ODM\MongoDB\Query\Builder|\Doctrine\ORM\QueryBuilder
      */
     abstract protected function getSingleResult(array $args);
+
+    /**
+     * Handles mocking of getOneOrNullResult calls, which are another special case
+     *
+     * @param array|null $args
+     * @return \Doctrine\ODM\MongoDB\Query\Builder|\Doctrine\ORM\QueryBuilder
+     */
+    abstract protected function getOneOrNullResult(array $args);
 }

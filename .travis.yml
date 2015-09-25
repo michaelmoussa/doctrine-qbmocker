@@ -8,13 +8,13 @@ php:
 before_script:
     - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - composer self-update
-    - composer install --dev
+    - composer install --dev --ignore-platform-reqs
 
 script:
     - cd $TRAVIS_BUILD_DIR/test
     - phpunit --configuration phpunit.xml.ci
     - cd $TRAVIS_BUILD_DIR
-    - ./vendor/squizlabs/php_codesniffer/scripts/phpcs --standard=PSR2 -s -p ./src ./test
+    - ./vendor/squizlabs/php_codesniffer/scripts/phpcs --standard=PSR2 -s -p --extensions=php ./src ./test
 
 after_script:
     - php vendor/bin/coveralls
