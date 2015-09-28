@@ -253,4 +253,21 @@ class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
         $qbm = new QueryBuilderMocker($this);
         $qbm->foo();
     }
+
+    /**
+     * @author Lauri Orgla <theorx@hotmail.com>
+     * @covers \MMoussa\Doctrine\Test\ORM\QueryBuilderMocker::getQueryMock
+     */
+    public function testGetQueryMockReturnsMockObject()
+    {
+
+        $qbm = new QueryBuilderMocker($this);
+        $qbm->getQuery()
+            ->execute();
+
+        $queryMock = $qbm->getQueryMock();
+        $queryBuilderMock = $qbm->getQueryBuilderMock();
+        $this->assertInstanceOf('\PHPUnit_Framework_MockObject_MockObject', $queryMock);
+        $this->assertNull($queryBuilderMock->getQuery()->execute());
+    }
 }
