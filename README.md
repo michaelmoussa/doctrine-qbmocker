@@ -116,12 +116,12 @@ Prefer MySQL? This library supports mocking Doctrine ORM query builders as well.
 
 ### Installation
 
-The only supported method of installation is Composer: `composer require "michaelmoussa/doctrine-qbmocker:0.*" --dev`
+The only supported method of installation is Composer: `composer require --dev "michaelmoussa/doctrine-qbmocker"`
 
 ### Dependencies
 
-* Using this library for mocking the ORM query builder requires you to install `"doctrine/orm": "0.2.*"` as well.
-* Using this library for mocking the ODM query builder requires you to install `"doctrine/mongodb-odm": "dev-master"` and `"jmikola/geojson": "~1.0"` as well.
+* Using this library for mocking the ORM query builder requires you to `composer require --dev "doctrine/orm"` as well.
+* Using this library for mocking the ODM query builder requires you to `composer require --dev "doctrine/mongodb-odm" "jmikola/geojson"` as well.
 
 ### Contributing
 

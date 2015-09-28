@@ -10,14 +10,14 @@
         }
     ],
     "require": {
-        "phpunit/phpunit": ">=3.7 | ~4.2"
+        "phpunit/phpunit": "^3.7.0 | ^4.2.0"
     },
     "require-dev": {
-        "doctrine/mongodb-odm": "dev-master",
-        "doctrine/orm": "2.*",
-        "jmikola/geojson": "~1.0",
-        "satooshi/php-coveralls": "dev-master",
-        "squizlabs/php_codesniffer": "1.*"
+        "doctrine/mongodb": "^1.2",
+        "doctrine/orm": "^2.5",
+        "jmikola/geojson": "^1.0",
+        "squizlabs/php_codesniffer": "^2.3",
+        "satooshi/php-coveralls": "^0.6.1"
     },
     "suggest": {
         "doctrine/mongodb-odm": "Allows for simplified mocking of Doctrine ODM MongoDB query builders.",
