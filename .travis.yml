@@ -1,15 +1,23 @@
 language: php
 
-php:
-    - 5.5
-    - 5.6
-    - 7.0
+matrix:
+  fast_finish: true
+  include:
+    - php: 5.5
+      env:
+        - MONGO_EXTENSION_SUPPORTED=true
+    - php: 5.6
+      env:
+        - MONGO_EXTENSION_SUPPORTED=true
+    - php: 7.0
+      env:
+        - MONGO_EXTENSION_SUPPORTED=false
 
 before_script:
-    - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - if [[ $MONGO_EXTENSION_SUPPORTED == 'true' ]]; then echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; fi
     - composer self-update
-    - composer install
-    - composer require "doctrine/mongodb-odm"
+    - if [[ $MONGO_EXTENSION_SUPPORTED == true ]]; then composer install ; fi
+    - if [[ $MONGO_EXTENSION_SUPPORTED == false ]]; then composer install --ignore-platform-reqs ; fi
 
 script:
     - cd $TRAVIS_BUILD_DIR/test
