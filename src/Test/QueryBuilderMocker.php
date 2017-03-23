@@ -9,8 +9,8 @@
 namespace MMoussa\Doctrine\Test;
 
 use BadMethodCallException;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Base class for mocking Doctrine QueryBuilder fluent interface invocations for use in PHPUnit tests.
@@ -27,7 +27,7 @@ abstract class QueryBuilderMocker
     /**
      * Instance of the TestCase in which this QueryBuilderMock is going to be used.
      *
-     * @var PHPUnit_Framework_TestCase
+     * @var TestCase
      */
     protected $testCase;
 
