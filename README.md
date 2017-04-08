@@ -129,6 +129,8 @@ The only supported method of installation is Composer: `composer require --dev "
 
 ### Contributing
 
-Contributions are welcome. There are several unsupported methods still that would be non-trivial to implement. Please feel free to take care of those and send a PR.
+I am no longer actively maintaining this project, but I do review and merge Pull Requests, so contributions are welcome.
+There are several unsupported methods still that would be non-trivial to implement. Please feel free to take care of
+those and send a PR.
 
 All contributions must conform to PSR2 and include 100% test coverage.
