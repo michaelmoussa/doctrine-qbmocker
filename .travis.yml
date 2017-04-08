@@ -3,26 +3,16 @@ language: php
 matrix:
   fast_finish: true
   include:
-    - php: 5.5
-      env:
-        - MONGO_EXTENSION_SUPPORTED=true
-    - php: 5.6
-      env:
-        - MONGO_EXTENSION_SUPPORTED=true
     - php: 7.0
-      env:
-        - MONGO_EXTENSION_SUPPORTED=false
+    - php: 7.1
 
 before_script:
-    - if [[ $MONGO_EXTENSION_SUPPORTED == 'true' ]]; then echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ; fi
+    - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - composer self-update
-    - if [[ $MONGO_EXTENSION_SUPPORTED == true ]]; then composer install ; fi
-    - if [[ $MONGO_EXTENSION_SUPPORTED == false ]]; then composer install --ignore-platform-reqs ; fi
+    - composer install
 
 script:
-    - cd $TRAVIS_BUILD_DIR/test
-    - phpunit --configuration phpunit.xml.ci
-    - cd $TRAVIS_BUILD_DIR
+    - ./vendor/bin/phpunit
     - ./vendor/squizlabs/php_codesniffer/scripts/phpcs --standard=PSR2 -s -p --extensions=php ./src ./test
 
 after_script:
