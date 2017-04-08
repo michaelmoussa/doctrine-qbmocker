@@ -9,7 +9,7 @@
 namespace MMoussa\Doctrine\Test\ODM\MongoDB;
 
 use MMoussa\Doctrine\Test\QueryBuilderMocker as BaseQueryBuilderMocker;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Mocks Doctrine MongoDB ODM QueryBuilder fluent interface invocations for use in PHPUnit tests.
@@ -211,9 +211,9 @@ class QueryBuilderMocker extends BaseQueryBuilderMocker
     /**
      * Initializes the TestCase and creates a mock QueryBuilder and Query for later use.
      *
-     * @param PHPUnit_Framework_TestCase $testCase
+     * @param TestCase $testCase
      */
-    public function __construct(PHPUnit_Framework_TestCase $testCase)
+    public function __construct(TestCase $testCase)
     {
         $this->testCase = $testCase;
         $this->queryBuilder = $testCase->getMockBuilder('Doctrine\ODM\MongoDB\Query\Builder')

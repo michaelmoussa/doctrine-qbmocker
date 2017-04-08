@@ -8,9 +8,9 @@
 
 namespace MMoussa\Doctrine\Test\ORM;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class QueryBuilderMockerTest extends PHPUnit_Framework_TestCase
+class QueryBuilderMockerTest extends TestCase
 {
     public function testCanGetInstanceOfTheQueryBuilderMock()
     {
