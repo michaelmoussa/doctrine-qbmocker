@@ -8,6 +8,7 @@
 
 namespace MMoussa\Doctrine\Test\ODM\MongoDB;
 
+use BadMethodCallException;
 use PHPUnit\Framework\TestCase;
 
 class QueryBuilderMockerTest extends TestCase
@@ -124,13 +125,11 @@ class QueryBuilderMockerTest extends TestCase
         $this->assertSame('it works!', $result);
     }
 
-    /**
-     * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage Mocking "expr" is not supported.
-     */
     public function testBadMethodCallExceptionIsThrownIfAttemptingToMockUnsupportedMethod()
     {
         $qbm = new QueryBuilderMocker($this);
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('Mocking "expr" is not supported.');
         $qbm->expr();
     }
 }

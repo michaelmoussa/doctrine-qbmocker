@@ -8,6 +8,8 @@
 
 namespace MMoussa\Doctrine\Test\ORM;
 
+use BadMethodCallException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class QueryBuilderMockerTest extends TestCase
@@ -244,13 +246,11 @@ class QueryBuilderMockerTest extends TestCase
         $qb->andWhere($expression);
     }
 
-    /**
-     * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage Mocking "foo" is not supported.
-     */
     public function testBadMethodCallExceptionIsThrownIfAttemptingToMockUnsupportedMethod()
     {
         $qbm = new QueryBuilderMocker($this);
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('Mocking "foo" is not supported.');
         $qbm->foo();
     }
 
@@ -267,7 +267,7 @@ class QueryBuilderMockerTest extends TestCase
 
         $queryMock = $qbm->getQueryMock();
         $queryBuilderMock = $qbm->getQueryBuilderMock();
-        $this->assertInstanceOf('\PHPUnit_Framework_MockObject_MockObject', $queryMock);
+        $this->assertInstanceOf(MockObject::class, $queryMock);
         $this->assertNull($queryBuilderMock->getQuery()->execute());
     }
 }
